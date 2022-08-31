@@ -26,6 +26,7 @@ async def on_voice_state_update(member: discord.Member, before: discord.VoiceSta
     else:
         if len(before.channel.members) == 1:
             await before.channel.members[0].add_roles(role)
+        await member.remove_roles(role)
 
 @client.event
 async def on_ready():
