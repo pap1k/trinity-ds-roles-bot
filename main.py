@@ -1,7 +1,5 @@
 import os
-from tokenize import Name
 import discord
-from discord.utils import get
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -17,11 +15,9 @@ async def on_voice_state_update(member: discord.Member, before: discord.VoiceSta
 
     if after.channel != None: #зашел
         if len(after.channel.members) == 1:
-            print(123)
             await member.add_roles(role)
         else:
             for mem in after.channel.members:
-                print(mem, "removed")
                 await mem.remove_roles(role)
         if before.channel:
             if len(before.channel.members) == 1:
