@@ -1,3 +1,4 @@
+from itertools import count
 import os
 import discord
 
@@ -7,29 +8,40 @@ intents.message_content = True
 client = discord.Client(intents=intents)
 
 RADIO_CHANNEL = 997523978111438888
-BOTS_ID = [282859044593598464, 819457016774656060, 797889731731783711, 614109280508968980, 159985870458322944]
 
+def countUsers(channel : discord.channel):
+    c = 0
+    for mem in channel.members:
+        if not mem.bot:
+            c += 1
+    return c
+
+def getUser(channel : discord.channel) -> discord.Member:
+    for mem in channel.members:
+        if not mem.bot:
+            return mem
+    return None
 
 @client.event
 async def on_voice_state_update(member: discord.Member, before: discord.VoiceState, after: discord.VoiceState):
     role = client.get_guild(530673741705904150).get_role(1014517727790121030)
     
-    if member.id in BOTS_ID:
+    if member.bot:
         return
 
     if after.channel != None: #зашел
-        if len(after.channel.members) == 1:
+        if countUsers(after.channel) == 1:
             await member.add_roles(role)
         else:
             for mem in after.channel.members:
                 await mem.remove_roles(role)
         if before.channel:
-            if len(before.channel.members) == 1:
-                await before.channel.members[0].add_roles(role)
+            if countUsers(before.channel) == 1:
+                await getUser(before.channel).add_roles(role)
 
     else:
-        if len(before.channel.members) == 1:
-            await before.channel.members[0].add_roles(role)
+        if countUsers(before.channel.members) == 1:
+            await getUser(before.channel).add_roles(role)
         await member.remove_roles(role)
 
 @client.event
