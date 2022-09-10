@@ -38,7 +38,8 @@ async def on_voice_state_update(member: discord.Member, before: discord.VoiceSta
             await member.add_roles(role)
         else:
             for mem in after.channel.members:
-                await mem.remove_roles(role)
+                if not mem.voice.self_mute:
+                    await mem.remove_roles(role)
         if before.channel:
             if countUsers(before.channel) == 1:
                 await getUser(before.channel).add_roles(role)
