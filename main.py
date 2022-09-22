@@ -8,9 +8,9 @@ client = discord.Client(intents=intents)
 
 RADIO_CHANNEL = 997523978111438888
 
-def countUsers(channel : discord.channel):
+def countUsers(channel):
     c = 0
-    if channel:
+    if channel and channel.members:
         for mem in channel.members:
             if not mem.bot:
                 c += 1
