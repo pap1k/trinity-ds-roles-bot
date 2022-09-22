@@ -4,12 +4,7 @@ import discord
 intents = discord.Intents.default()
 intents.message_content = True
 
-from aiohttp import ProxyConnector
-connector = ProxyConnector("proxy.server:3128")
-
-cient = discord.Client(connector=connector, connector=connector)
-
-client = discord.Client(intents=intents)
+client = discord.Client(intents=intents, proxy="http://proxy.server:3128")
 
 RADIO_CHANNEL = 997523978111438888
 
