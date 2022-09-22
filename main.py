@@ -1,8 +1,5 @@
 import os
 import discord
-from dotenv import load_dotenv
-project_folder = os.path.expanduser('~/trinity-ds-roles-bot')  # adjust as appropriate
-load_dotenv(os.path.join(project_folder, '.env'))
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -28,21 +25,15 @@ def getUser(channel : discord.channel) -> discord.Member:
 async def on_voice_state_update(member: discord.Member, before: discord.VoiceState, after: discord.VoiceState):
     role = client.get_guild(530673741705904150).get_role(1014517727790121030)
     
-    if after.self_mute:
-        await member.add_roles(role)
-    else:
-        await member.remove_roles(role)
-
     if member.bot:
         return
 
     if after.channel != None: #зашел
-        if countUsers(after.channel) == 1 or after.self_mute:
+        if countUsers(after.channel) == 1:
             await member.add_roles(role)
         else:
             for mem in after.channel.members:
-                if not mem.voice.self_mute:
-                    await mem.remove_roles(role)
+                await mem.remove_roles(role)
         if before.channel:
             if countUsers(before.channel) == 1:
                 await getUser(before.channel).add_roles(role)
