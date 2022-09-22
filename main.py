@@ -1,6 +1,9 @@
 from itertools import count
 import os
 import discord
+from dotenv import load_dotenv
+project_folder = os.path.expanduser('~/trinity-ds-roles-bot')  # adjust as appropriate
+load_dotenv(os.path.join(project_folder, '.env'))
 
 intents = discord.Intents.default()
 intents.message_content = True
