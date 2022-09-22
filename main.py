@@ -4,6 +4,11 @@ import discord
 intents = discord.Intents.default()
 intents.message_content = True
 
+from aiohttp import ProxyConnector
+connector = ProxyConnector("proxy.server:3128")
+
+cient = discord.Client(connector=connector, connector=connector)
+
 client = discord.Client(intents=intents)
 
 RADIO_CHANNEL = 997523978111438888
