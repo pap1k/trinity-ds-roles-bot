@@ -4,7 +4,7 @@ import discord
 intents = discord.Intents.default()
 intents.message_content = True
 
-client = discord.Client(intents=intents, proxy="proxy.server:3128")
+client = discord.Client(intents=intents, proxy="https://proxy.server:3128")
 
 RADIO_CHANNEL = 997523978111438888
 
